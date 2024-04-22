@@ -13,19 +13,19 @@ const char HIT = '*';
 const char VOID = '-';
 
 
-class Matrice {
+class BattleField {
 
   private:
     char m[DIM][DIM];
 
   public:
-    Matrice() {
+    BattleField() {
         for (int i=0; i<DIM; i++)
             for (int j=0; j<DIM; j++)
                 m[i][j] = 97 + rand()%26;        
     }
 
-    Matrice( char c ) {
+    BattleField( char c ) {
         for (int i=0; i<DIM; i++)
             for (int j=0; j<DIM; j++)
                 m[i][j] = c;

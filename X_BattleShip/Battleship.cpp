@@ -1,6 +1,6 @@
 /*
 Battaglia navale
-Itrbi Mohamed Amin - 20/04/2024
+Itrbi Mohamed Amin - 22/04/2024
 */
 #include <iostream>
 
@@ -10,49 +10,65 @@ using namespace std;
 
 
 class BattleShip{
+
     private:
+    BattleField mappa;
+    BattleField campo;
 
-        BattleField campo;
-        BattleField mappa;
 
-    public:
+    public: 
     BattleShip(){
-        mappa = BattleField( NOTHING );
-        campo = BattleField( NOTHING );
-        campo.placeHorizontalShip(3);
+        srand(time(NULL));
+        mappa = BattleField( VOID );
+        campo = BattleField( VOID );
+        campo.placeHorizontalShip(3); 
         campo.placeVerticalShip(4);
         campo.placeVerticalShip(2);
         campo.placeHorizontalShip(5);
-    }
-
-    void game(){
-        // lancia 20 bombe a caso
-        for (int i=0; i<20; i++) {
-            int x = rand() % DIM;
-            int y = rand() % DIM;
-            if (campo.get(x,y) == S) continue; //Controlla che non si ripetano le bombe
-            if (campo.get(x,y)==SHIP){
-                mappa.put(x,y,S);
-                campo.put(x,y,S);
-            }
-            else mappa.put (x,y, NOTS); //La bomba non ha colpito nulla
-        }
-
-    
-
-        mappa.stampa();
-
         
 
-        campo.stampa(); //Stampa il campo risolto
-
-    }
-    void ask() {
-        cout << "Insertisci le coordinate di riga e colonna in cui sganciare loa bomba: ";
-        int x,y;
-        cin >> x;
-        cin >> y;
     }
 
+    void play(){
 
-};
+        while(true){
+            mappa.stampa();
+            if( !playHand()) 
+            break;
+  
+        }
+
+        
+        campo.stampa();
+    }
+
+    bool playHand(){
+        cout<<"Inserisci le cordinate di riga e colona (1-10) in cui sganciare la bomba";
+        int x, y;
+        cin>>x; if (x == 0 || x > DIM) return false; else x--;
+        cin>>y; if (y == 0 || y > DIM) return false; else y--;
+        if(x<=0)
+            return false; else x--;
+        if(y<=0)
+            return false; else y--;
+            
+        
+        if(campo.get(x,y)==SHIP) {
+                mappa.put(x,y,HIT);
+                campo.put(x,y,HIT);
+            } else mappa.put(x,y,MISS);
+        }
+    bool Gameover(){
+            
+            for (int i = 0; i < DIM; i++) {
+                for (int j = 0; j < DIM; j++) {
+                    if (campo.get(i, j) == SHIP) {
+                        return false;
+                    
+                }
+            }
+            return true;
+        }
+
+        }
+    };
